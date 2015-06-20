@@ -47,6 +47,8 @@ defmodule InterpreterTest do
   end
 
   test "identifier_action raises an error if the value is not found" do
+    Scheme.DefinitionTable.start_link
+
     assert_raise RuntimeError, fn ->
       identifier_action(:foo, empty_table)
     end
@@ -213,6 +215,23 @@ defmodule InterpreterTest do
                [[:zero?, :n], 1],
                [:else, 
                  [:*, :n, [[:f, :f], [:sub1, :n]]]]]]]], 10]) == 3628800
+  end
+
+  test "definition_action writes to the definition table" do
+    Scheme.DefinitionTable.start_link
+
+    value([:define, :fubar, [:lambda, [:x], [:add1, :x]]])
+
+    assert Scheme.DefinitionTable.get(:fubar) ==
+      [:non_primitive, [[], [:x], [:add1, :x]]]
+  end
+
+  test "define" do
+    Scheme.DefinitionTable.start_link
+
+    value([:define, :fubar, [:lambda, [:x], [:add1, :x]]])
+
+    assert value([:fubar, 42]) == 43
   end
 
   defp empty_table, do: [ [[], []] ]

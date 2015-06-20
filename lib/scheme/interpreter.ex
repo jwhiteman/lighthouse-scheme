@@ -1,5 +1,7 @@
 defmodule Scheme.Interpreter do
 
+  import Scheme.DefinitionTable, only: [ put: 2, get: 1]
+
   def build(s1, s2), do: [s1 | [s2 | []]]
 
   def new_entry(l, r), do: build(l, r)
@@ -37,11 +39,22 @@ defmodule Scheme.Interpreter do
   def quote_action([_label, body], _), do: body
 
   def identifier_action(e, table) do
-    lookup_in_table(e, table, fn (n) -> raise "identifier #{n} not found." end)
+    lookup_in_table(e, table, &lookup_definition/1)
+  end
+
+  def lookup_definition(name) do
+    case get(name) do
+      nil  -> raise "identifier #{name} not found"
+      body -> body
+    end
   end
 
   def lambda_action([_type, formals, body], table) do
     [:non_primitive, [table, formals, body]]
+  end
+
+  def define_action([_type, name, lambda], _table) do
+    put name, lambda_action(lambda, [])
   end
 
   def atom_to_action(n) when is_number(n) do
@@ -58,6 +71,7 @@ defmodule Scheme.Interpreter do
   def list_to_action([:quote|_]), do: &Scheme.Interpreter.quote_action/2
   def list_to_action([:lambda|_]), do: &Scheme.Interpreter.lambda_action/2
   def list_to_action([:cond|_]), do: &Scheme.Interpreter.cond_action/2
+  def list_to_action([:define|_]), do: &Scheme.Interpreter.define_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
   end
