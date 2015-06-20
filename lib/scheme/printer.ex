@@ -8,7 +8,7 @@ defmodule Scheme.Printer do
   def print(true), do: "#t"
   def print(atom) when is_atom(atom), do: to_string(atom)
 
-  def print_helper([]), do: ")"
-  def print_helper([h|[]]), do: print(h) <> print_helper([])
-  def print_helper([h|t]), do: print(h) <> " " <> print_helper(t)
+  defp print_helper([]), do: ")"
+  defp print_helper([h|[]]), do: print(h) <> print_helper([])
+  defp print_helper([h|t]), do: print(h) <> " " <> print_helper(t)
 end
