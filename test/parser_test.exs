@@ -4,20 +4,20 @@ defmodule ParserTest do
   import Scheme.Parser
 
   test "an empty list" do
-    assert parse("()") == []
+    assert parse("()") == [[]]
   end
 
   test "a list" do
-    assert parse("(+ 1 2 3)") == [:+, 1, 2, 3]
+    assert parse("(+ 1 2 3)") == [[:+, 1, 2, 3]]
   end
 
   test "booleans" do
-    [_, true]  = parse("(else #t)")
-    [_, false] = parse("(else #f)")
+    [[:else, true]] = parse("(else #t)")
+    [[:else, false]] = parse("(else #f)")
   end
 
   test "atoms with integers" do
-    assert parse("(add1 x)") == [:add1, :x]
+    assert parse("(add1 x)") == [[:add1, :x]]
   end
 
   test "a complex list" do
@@ -31,7 +31,7 @@ defmodule ParserTest do
           (else
             (cons (car lat)
               (rember a (cdr lat)))))))
-    """) == [:define, :rember,
+    """) == [[:define, :rember,
               [:lambda, [:a, :lat],
                 [:cond,
                   [[:null?, :l], [:quote, []]],
@@ -39,6 +39,6 @@ defmodule ParserTest do
                     [:cdr, :lat]],
                   [:else,
                     [:cons, [:car, :lat],
-                      [:rember, :a, [:cdr, :lat]]]]]]]
+                      [:rember, :a, [:cdr, :lat]]]]]]]]
   end
 end

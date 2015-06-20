@@ -7,7 +7,7 @@ defmodule Scheme.Evaluator do
     |> eval
   end
 
-  defp eval(expressions) do
-    List.foldl(expressions, nil, fn (exp, _acc) -> Scheme.Interpreter.value(exp) end)
+  def eval(exps) do
+    Enum.map(exps, &Scheme.Interpreter.value(&1)) |> List.last
   end
 end
