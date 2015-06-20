@@ -4,9 +4,9 @@ Terminals '(' ')' int bool atom.
 Rootsymbol program.
 
 program ->
-  list             : '$1'.
+  list             : ['$1'].
 program ->
-  list program     : ['$1', '$2'].
+  list program     : ['$1' | '$2'].
 
 list ->
   '(' ')'          : [].

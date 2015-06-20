@@ -234,7 +234,8 @@ yeccpars2_1(_, _, _, _, T, _, _) ->
 yeccpars2_2(S, '(', Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
 yeccpars2_2(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccgoto_program(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
+ NewStack = yeccpars2_2_(Stack),
+ yeccgoto_program(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 yeccpars2_3(S, '(', Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
@@ -325,6 +326,14 @@ yeccgoto_program(0, Cat, Ss, Stack, T, Ts, Tzr) ->
 yeccgoto_program(2=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_13(_S, Cat, Ss, Stack, T, Ts, Tzr).
 
+-compile({inline,yeccpars2_2_/1}).
+-file("src/sparser.yrl", 3).
+yeccpars2_2_(__Stack0) ->
+ [__1 | __Stack] = __Stack0,
+ [begin
+   [ __1 ]
+  end | __Stack].
+
 -compile({inline,yeccpars2_6_/1}).
 -file("src/sparser.yrl", 13).
 yeccpars2_6_(__Stack0) ->
@@ -386,7 +395,7 @@ yeccpars2_12_(__Stack0) ->
 yeccpars2_13_(__Stack0) ->
  [__2,__1 | __Stack] = __Stack0,
  [begin
-   [ __1 , __2 ]
+   [ __1 | __2 ]
   end | __Stack].
 
 
