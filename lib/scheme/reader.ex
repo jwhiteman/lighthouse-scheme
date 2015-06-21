@@ -1,39 +1,38 @@
 defmodule Scheme.Reader do
-  # 1. ignore lines of pure whitespace
-  # 2. print non-lists immediately
-  # 3. if the number of ( equal the number of ), then print
-  # 4. if the number of ( are greater than ), then recur until they do
-  # 5. if the number of ( is less than ), then raise an error.
-  # you'll need an accumulator, because for any given line '(' and ')' may be uneven.
-  # ...so you'll need to run the tests against the accumulator <> new-content.
 
   @lparen 40
   @rparen 41
 
   def read do
-    IO.gets("# ") |> process("") |> Scheme.Printer.print |> IO.puts
+    read(1)
+  end
 
-    read
+  def read(n) do
+    IO.gets("#;#{n}> ") |> process("") |> Scheme.Printer.print |> IO.puts
+
+    read(n + 1)
   end
 
   def process(str, acc) do
     current_total = acc <> clean(str)
 
     case reader(current_total) do
-      { :ok, :ignore }   -> IO.gets("") |> process(current_total)
+      { :ok, :ignore }   ->
+        IO.gets("") |> process(current_total)
       { :ok, :evaluate } ->
         Scheme.Evaluator.run(current_total)
-      { :ok, :recur }    -> (" " <> IO.gets("")) |> process(current_total)
+      { :ok, :recur }    ->
+        IO.gets("")  |> process(current_total)
     end
   end
 
   def clean(str) do
-    String.strip str
+    String.replace str, "\n", " "
   end
 
   def reader(str) do
     cond do
-      is_empty_string(str) ->
+      is_only_whitespace(str) ->
         { :ok, :ignore }
       is_non_list(str) ->
         { :ok, :evaluate }
@@ -67,8 +66,7 @@ defmodule Scheme.Reader do
       num_right_parens(str) == 0
   end
 
-  defp is_empty_string(""), do: true
-  defp is_empty_string(_), do: false
+  defp is_only_whitespace(str), do: String.match?(str, ~r/^\s+$/)
 
   defp count_num_char(str, char) do
     Enum.filter(to_char_list(str), fn (e) -> e == char end) |> length
