@@ -11,9 +11,20 @@ defmodule Scheme.Reader do
   @rparen 41
 
   def read do
-    IO.gets("# ") |> String.strip |> IO.puts
+    IO.gets("# ") |> process("") |> Scheme.Printer.print |> IO.puts
 
     read
+  end
+
+  def process(str, acc) do
+    current_total = acc <> clean(str)
+
+    case reader(current_total) do
+      { :ok, :ignore }   -> IO.gets("") |> process(current_total)
+      { :ok, :evaluate } ->
+        Scheme.Evaluator.run(current_total)
+      { :ok, :recur }    -> (" " <> IO.gets("")) |> process(current_total)
+    end
   end
 
   def clean(str) do

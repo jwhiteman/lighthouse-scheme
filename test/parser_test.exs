@@ -3,6 +3,25 @@ defmodule ParserTest do
 
   import Scheme.Parser
 
+  test "a single element" do
+    assert parse("1") == [1]
+  end
+
+  test "multiple elements" do
+    assert parse("1 1 1") == [1, 1, 1]
+  end
+
+  test "elements with lists" do
+    assert parse("1 (add1 1) 1 (add1 1)") == [1, [:add1, 1], 1, [:add1, 1]]
+    assert parse("1 1 1 (add1 1) 1 1 (add1 1) 1 1") == 
+      [1, 1, 1, [:add1, 1], 1, 1, [:add1, 1], 1, 1]
+  end
+
+  test "elements with complex lists" do
+    assert parse("1 1 1 ((lambda (x) (add1 x)) 42) 1 1") ==
+      [1, 1, 1, [[:lambda, [:x], [:add1, :x]], 42], 1, 1]
+  end
+
   test "an empty list" do
     assert parse("()") == [[]]
   end

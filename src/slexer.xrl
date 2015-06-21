@@ -6,7 +6,6 @@ WHITESPACE = [\s\t\n\r]
 
 Rules.
 
-%% TODO: figure out what TokenLine does.
 {INT}         : {token, {int,  TokenLine, list_to_integer(TokenChars)}}.
 \#t           : {token, {bool, TokenLine, true}}.
 \#f           : {token, {bool, TokenLine, false}}.

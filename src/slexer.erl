@@ -12,7 +12,7 @@
 -export([format_error/1]).
 
 %% User code. This is placed here to allow extra attributes.
--file("src/slexer.xrl", 18).
+-file("src/slexer.xrl", 17).
 
 to_atom(Chars) ->
   list_to_atom(Chars).
@@ -404,37 +404,37 @@ yyaction(6, _, _, _) ->
 yyaction(_, _, _, _) -> error.
 
 -compile({inline,yyaction_0/2}).
--file("src/slexer.xrl", 8).
+-file("src/slexer.xrl", 7).
 yyaction_0(TokenChars, TokenLine) ->
      { token, { int, TokenLine, list_to_integer (TokenChars) } } .
 
 -compile({inline,yyaction_1/1}).
--file("src/slexer.xrl", 9).
+-file("src/slexer.xrl", 8).
 yyaction_1(TokenLine) ->
      { token, { bool, TokenLine, true } } .
 
 -compile({inline,yyaction_2/1}).
--file("src/slexer.xrl", 10).
+-file("src/slexer.xrl", 9).
 yyaction_2(TokenLine) ->
      { token, { bool, TokenLine, false } } .
 
 -compile({inline,yyaction_3/2}).
--file("src/slexer.xrl", 11).
+-file("src/slexer.xrl", 10).
 yyaction_3(TokenChars, TokenLine) ->
      { token, { atom, TokenLine, to_atom (TokenChars) } } .
 
 -compile({inline,yyaction_4/1}).
--file("src/slexer.xrl", 12).
+-file("src/slexer.xrl", 11).
 yyaction_4(TokenLine) ->
      { token, { '(', TokenLine } } .
 
 -compile({inline,yyaction_5/1}).
--file("src/slexer.xrl", 13).
+-file("src/slexer.xrl", 12).
 yyaction_5(TokenLine) ->
      { token, { ')', TokenLine } } .
 
 -compile({inline,yyaction_6/0}).
--file("src/slexer.xrl", 14).
+-file("src/slexer.xrl", 13).
 yyaction_6() ->
      skip_token .
 
