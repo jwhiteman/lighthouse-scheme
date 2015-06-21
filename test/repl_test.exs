@@ -1,7 +1,7 @@
-defmodule ReaderTest do
+defmodule REPLTest do
   use ExUnit.Case
 
-  import Scheme.Reader
+  import Scheme.REPL
 
   test "count left parens" do
     assert num_left_parens("foo") == 0

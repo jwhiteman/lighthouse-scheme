@@ -2,7 +2,7 @@ defmodule Scheme do
   def start do
     Scheme.DefinitionTable.start_link
 
-    Scheme.Reader.read
+    Scheme.REPL.start
   end
 
   def parse(scheme) do

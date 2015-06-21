@@ -1,16 +1,16 @@
-defmodule Scheme.Reader do
+defmodule Scheme.REPL do
 
   @lparen 40
   @rparen 41
 
-  def read do
-    read(1)
+  def start do
+    repl(1)
   end
 
-  def read(n) do
+  def repl(n) do
     IO.gets("#;#{n}> ") |> process("") |> Scheme.Printer.print |> IO.puts
 
-    read(n + 1)
+    repl(n + 1)
   end
 
   def process(str, acc) do
@@ -32,13 +32,13 @@ defmodule Scheme.Reader do
 
   def reader(str) do
     cond do
-      is_only_whitespace(str) ->
+      is_only_whitespace?(str) ->
         { :ok, :ignore }
-      is_non_list(str) ->
+      is_non_list?(str) ->
         { :ok, :evaluate }
-      is_balanced(str) ->
+      is_balanced?(str) ->
         { :ok, :evaluate }
-      has_more_left_parens(str) ->
+      has_more_left_parens?(str) ->
         { :ok, :recur }
       true ->
         { :error, :unexpected_list_terminator }
@@ -53,20 +53,20 @@ defmodule Scheme.Reader do
     count_num_char(str, @rparen)
   end
 
-  defp has_more_left_parens(str) do
+  defp has_more_left_parens?(str) do
     num_left_parens(str) > num_right_parens(str)
   end
 
-  defp is_balanced(str) do
+  defp is_balanced?(str) do
     num_left_parens(str) == num_right_parens(str)
   end
 
-  defp is_non_list(str) do
+  defp is_non_list?(str) do
     num_left_parens(str) == 0 &&
       num_right_parens(str) == 0
   end
 
-  defp is_only_whitespace(str), do: String.match?(str, ~r/^\s+$/)
+  defp is_only_whitespace?(str), do: String.match?(str, ~r/^\s+$/)
 
   defp count_num_char(str, char) do
     Enum.filter(to_char_list(str), fn (e) -> e == char end) |> length
