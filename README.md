@@ -20,6 +20,7 @@
 
 - friendlier error handling
 - launch with a bin
+- better readline (?)
 
 ### other
 

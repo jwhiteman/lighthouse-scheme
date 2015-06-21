@@ -1,7 +1,5 @@
 defmodule Scheme.Evaluator do
   def run(str) do
-    Scheme.DefinitionTable.start_link
-
     str
     |> Scheme.Parser.parse
     |> eval
