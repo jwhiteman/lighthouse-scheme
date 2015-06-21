@@ -159,6 +159,18 @@ defmodule InterpreterTest do
     assert or_action([:or, [:eq?, 1, 1], [:eq?, 2, 2]], empty_table) == true
   end
 
+  test "not_action takes any truthy value and returns false" do
+    assert not_action([:not, true], empty_table) == false
+    assert not_action([:not, 42], empty_table) == false
+    assert not_action([:not, [:add1, 1]], empty_table) == false
+    assert not_action([:not, [:eq?, 1, 1]], empty_table) == false
+  end
+
+  test "not_action takes false and returns true" do
+    assert not_action([:not, false], empty_table) == true
+    assert not_action([:not, [:eq?, 1, 2]], empty_table) == true
+  end
+
   test "apply_primitive" do
     assert apply_primitive(:cons, [1, []]) == [1]
     assert apply_primitive(:car, [[1, 2]]) == 1

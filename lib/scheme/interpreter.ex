@@ -73,6 +73,7 @@ defmodule Scheme.Interpreter do
   def list_to_action([:cond|_]), do: &Scheme.Interpreter.cond_action/2
   def list_to_action([:define|_]), do: &Scheme.Interpreter.define_action/2
   def list_to_action([:and|_]), do: &Scheme.Interpreter.and_action/2
+  def list_to_action([:not|_]), do: &Scheme.Interpreter.not_action/2
   def list_to_action([:or|_]), do: &Scheme.Interpreter.or_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
@@ -130,6 +131,10 @@ defmodule Scheme.Interpreter do
       func.(result)    -> throw(result)
       true             -> short_circuit_helper(t, table, func)
     end
+  end
+
+  def not_action([_, not_cond], table) do
+    meaning(not_cond, table) == false
   end
 
   def apply_primitive(:eq?, [v, v]), do: true

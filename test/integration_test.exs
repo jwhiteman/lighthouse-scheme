@@ -46,6 +46,19 @@ defmodule IntegrationTest do
     """
 
     assert Scheme.eval("(has-cool-resume? (quote (java javascript ocaml ruby)))") == "#t"
-    assert Scheme.eval("(has-cool-resume? (quote (tps-reports )))") == "#f"
+    assert Scheme.eval("(has-cool-resume? (quote (tps-reports synergy)))") == "#f"
+  end
+
+  test "nots" do
+    Scheme.DefinitionTable.start_link
+
+    Scheme.eval """
+    (define is-not-elephant?
+      (lambda (x)
+        (not (eq? x (quote elephant)))))
+    """
+
+    assert Scheme.eval("(is-not-elephant? (quote elephant))") == "#f"
+    assert Scheme.eval("(is-not-elephant? (quote laptop))") == "#t"
   end
 end
