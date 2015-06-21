@@ -111,8 +111,17 @@ defmodule Scheme.Interpreter do
   def apply_primitive(:add1, [n]), do: n + 1
   def apply_primitive(:sub1, [n]), do: n - 1
   def apply_primitive(:number?, [n]), do: is_number(n)
-  def apply_primitive(:*, [l, r]), do: l * r
-  def apply_primitive(n, _), do: raise "error: no primitive matches #{n}"
+  def apply_primitive(:*, tail) do
+    List.foldl tail, 1, &(&1 * &2)
+  end
+
+  def apply_primitive(:+, tail) do
+    List.foldl tail, 0, &(&1 + &2)
+  end
+
+  def apply_primitive(n, _) do
+    raise "error: no primitive matches #{n}"
+  end
 
   def appli([:primitive, fun_rep], vals) do
     apply_primitive(fun_rep, vals)
@@ -141,7 +150,7 @@ defmodule Scheme.Interpreter do
       :car, :cdr, :null?,
       :eq?, :atom?, :zero?,
       :add1, :sub1, :number?,
-      :*
+      :*, :+
     ]
   end
 

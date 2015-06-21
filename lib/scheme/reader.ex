@@ -20,7 +20,7 @@ defmodule Scheme.Reader do
       { :ok, :ignore }   ->
         IO.gets("") |> process(current_total)
       { :ok, :evaluate } ->
-        Scheme.Evaluator.run(current_total)
+        Scheme.Evaluator.eval(current_total)
       { :ok, :recur }    ->
         IO.gets("")  |> process(current_total)
     end

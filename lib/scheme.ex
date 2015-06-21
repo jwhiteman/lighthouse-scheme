@@ -4,4 +4,12 @@ defmodule Scheme do
 
     Scheme.Reader.read
   end
+
+  def parse(scheme) do
+    Scheme.Parser.parse(scheme)
+  end
+
+  def eval(scheme) do
+    Scheme.Evaluator.run(scheme)
+  end
 end

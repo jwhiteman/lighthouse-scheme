@@ -52,7 +52,9 @@ defmodule PrinterTest do
   end
 
   test "integration: evaluator with printer" do
-    result = Scheme.Evaluator.run """
+    Scheme.DefinitionTable.start_link
+
+    result = Scheme.Evaluator.eval """
     (define rember
       (lambda (a lat)
         (cond

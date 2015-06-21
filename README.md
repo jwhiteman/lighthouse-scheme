@@ -25,3 +25,4 @@
 ### other
 
 - add tests for the reader. DI?
+- dialyzer
