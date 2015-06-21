@@ -72,6 +72,8 @@ defmodule Scheme.Interpreter do
   def list_to_action([:lambda|_]), do: &Scheme.Interpreter.lambda_action/2
   def list_to_action([:cond|_]), do: &Scheme.Interpreter.cond_action/2
   def list_to_action([:define|_]), do: &Scheme.Interpreter.define_action/2
+  def list_to_action([:and|_]), do: &Scheme.Interpreter.and_action/2
+  def list_to_action([:or|_]), do: &Scheme.Interpreter.or_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
   end
@@ -96,6 +98,38 @@ defmodule Scheme.Interpreter do
   def evlis([], _), do: []
   def evlis([h|t], table) do
     [meaning(h, table) | evlis(t, table)]
+  end
+
+  def and_action([_ | and_lines], table), do: scheme_and(and_lines, table)
+  def or_action([_ | or_lines], table), do: scheme_or(or_lines, table)
+
+  def scheme_and(list, table) do
+    short_circuit list, table, &(&1 == false)
+  end
+
+  def scheme_or(list, table) do
+    short_circuit list, table, &(&1 != false)
+  end
+
+  defp short_circuit(list, table, func) do
+    try do
+      short_circuit_helper(list, table, func)
+    catch
+      e -> e
+    end
+  end
+
+  defp short_circuit_helper([h|[]], table, _) do
+    meaning(h, table)
+  end
+
+  defp short_circuit_helper([h|t], table, func) do
+    result = meaning(h, table)
+
+    cond do
+      func.(result)    -> throw(result)
+      true             -> short_circuit_helper(t, table, func)
+    end
   end
 
   def apply_primitive(:eq?, [v, v]), do: true

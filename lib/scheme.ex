@@ -10,6 +10,6 @@ defmodule Scheme do
   end
 
   def eval(scheme) do
-    Scheme.Evaluator.run(scheme)
+    Scheme.Evaluator.eval(scheme) |> Scheme.Printer.print
   end
 end

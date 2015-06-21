@@ -138,6 +138,27 @@ defmodule InterpreterTest do
     assert evlis([:x, [:car, [:quote, [1, 2, 3]]]], some_table) == [1, 1]
   end
 
+  test "and_action is false if any element is false" do
+    assert and_action([:and, false, false, true, false], empty_table) == false
+    assert and_action([:and, [:eq?, 1, 1], [:eq?, 2, 3]], empty_table) == false
+  end
+
+  test "and_action returns the last element if nothing is found to be false" do
+    assert and_action([:and, 1, 2, true, 4], empty_table) == 4
+    assert and_action([:and, [:eq?, 1, 1], [:eq?, 2, 2]], empty_table) == true
+  end
+
+  test "or_action is truthy if any element is truthy" do
+    assert or_action([:or, false, false, true, false], empty_table) == true
+    assert or_action([:or, [:eq?, 1, 1], [:eq?, 2, 3]], empty_table) == true
+    assert or_action([:or, false, false, 42, false], empty_table) == 42
+  end
+
+  test "or_action returns the last element if every element is truthy" do
+    assert or_action([:or, 1, false, true, 4], empty_table) == 1
+    assert or_action([:or, [:eq?, 1, 1], [:eq?, 2, 2]], empty_table) == true
+  end
+
   test "apply_primitive" do
     assert apply_primitive(:cons, [1, []]) == [1]
     assert apply_primitive(:car, [[1, 2]]) == 1

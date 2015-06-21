@@ -6,23 +6,23 @@
 
 ### lang
 
-- and
-- or
+- not
 - require
-- basic lib
-- unit tests
+- basic lib & test framework
+- allow define to work for non-lambdas (ex: `(define x 42)`)
 
 ### parsing
 
+- allow for comments
 - allow for quote literals
 
 ### repl
 
-- friendlier error handling
+- error handling
 - launch with a bin
 - better readline (?)
 
 ### other
 
-- add tests for the reader. DI?
+- add tests for the repl. DI?
 - dialyzer
