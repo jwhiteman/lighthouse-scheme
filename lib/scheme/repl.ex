@@ -16,7 +16,7 @@ defmodule Scheme.REPL do
   def process(str, acc) do
     current_total = acc <> clean(str)
 
-    case reader(current_total) do
+    case reader(str, current_total) do
       { :ok, :ignore }   ->
         IO.gets("") |> process(current_total)
       { :ok, :evaluate } ->
@@ -27,23 +27,26 @@ defmodule Scheme.REPL do
   end
 
   def clean(str) do
-    String.replace str, "\n", " "
+    String.replace str, "\n", "\n "
   end
 
-  def reader(str) do
+  def reader(latest, total) do
     cond do
-      is_only_whitespace?(str) ->
+      is_leading_comment?(latest) ->
         { :ok, :ignore }
-      is_non_list?(str) ->
+      is_only_whitespace?(total) ->
+        { :ok, :ignore }
+      is_non_list?(total) ->
         { :ok, :evaluate }
-      is_balanced?(str) ->
+      is_balanced?(total) ->
         { :ok, :evaluate }
-      has_more_left_parens?(str) ->
+      has_more_left_parens?(total) ->
         { :ok, :recur }
       true ->
         { :error, :unexpected_list_terminator }
     end
   end
+
 
   def num_left_parens(str) do
     count_num_char(str, @lparen)
@@ -51,6 +54,10 @@ defmodule Scheme.REPL do
 
   def num_right_parens(str) do
     count_num_char(str, @rparen)
+  end
+
+  defp is_leading_comment?(str) do
+    String.match? str, ~r/^\s*;/
   end
 
   defp has_more_left_parens?(str) do

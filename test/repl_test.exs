@@ -3,6 +3,8 @@ defmodule REPLTest do
 
   import Scheme.REPL
 
+  @empty ""
+
   test "count left parens" do
     assert num_left_parens("foo") == 0
     assert num_left_parens("()") == 1
@@ -15,24 +17,28 @@ defmodule REPLTest do
     assert num_right_parens("(1 2 ((3)))") == 3
   end
 
-  test "clean turns newlines into spaces" do
-    assert clean("  \n  ") == "     "
+  test "clean adds a space after newline" do
+    assert clean("abc\ndef") == "abc\n def"
   end
 
   test "non-lists are evaluated immediately" do
-    assert reader("42") == { :ok, :evaluate }
+    assert reader(@empty, "42") == { :ok, :evaluate }
   end
 
   test "balanced lists are evaluated immediately" do
-    assert reader("(1 (2) 3)") == { :ok , :evaluate }
+    assert reader(@empty, "(1 (2) 3)") == { :ok , :evaluate }
   end
 
   test "lists with more left parens recur" do
-    assert reader("(define rember") == { :ok, :recur }
+    assert reader(@empty, "(define rember") == { :ok, :recur }
   end
 
   test "lists with more right parens are an error" do
-    assert reader("(define rember))") == { :error, :unexpected_list_terminator }
+    assert reader(@empty, "(define rember))") == { :error, :unexpected_list_terminator }
+  end
+
+  test "lists with leading comments are ignored" do
+    assert reader("   ;; this is a comment!\n", @empty) == { :ok, :ignore }
   end
 
 end

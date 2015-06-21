@@ -5,6 +5,7 @@ defmodule IntegrationTest do
     Scheme.DefinitionTable.start_link
 
     Scheme.eval """
+    ;; another comment
     (define member?
       (lambda (a lat)
         (cond
@@ -14,6 +15,7 @@ defmodule IntegrationTest do
           (else
             (member? a (cdr lat))))))
 
+    ;; some comment
     (define is-rock-band?
       (lambda (band-name)
         (and (member? (quote a) band-name)
@@ -29,6 +31,7 @@ defmodule IntegrationTest do
     Scheme.DefinitionTable.start_link
 
     Scheme.eval """
+    ;; some comment
     (define member?
       (lambda (a lat)
         (cond
@@ -38,8 +41,9 @@ defmodule IntegrationTest do
           (else
             (member? a (cdr lat))))))
 
+    ;; yet another comment
     (define has-cool-resume?
-      (lambda (resume)
+      (lambda (resume) ;; some in-line comment
         (or (member? (quote elixir) resume)
             (member? (quote ocaml) resume)
             (member? (quote scheme) resume))))

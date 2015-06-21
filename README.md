@@ -6,13 +6,14 @@
 
 ### lang
 
+- add print
 - require
 - basic lib & test framework
 - allow define to work for non-lambdas (ex: `(define x 42)`)
 
 ### parsing
 
-- allow for comments
+- add strings
 - allow for quote literals
 
 ### repl
