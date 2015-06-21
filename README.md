@@ -2,8 +2,25 @@
 
 @wip.
 
-## next
-- implement _and_ and _or_.
-- reader
-- REPL
-- implement quote literals?
+## todo
+
+### lang
+
+- and
+- or
+- require
+- basic lib
+- unit tests
+
+### parsing
+
+- allow for quote literals
+
+### repl
+
+- friendlier error handling
+- launch with a bin
+
+### other
+
+- add tests for the reader. DI?
