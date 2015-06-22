@@ -14,7 +14,6 @@
 ### parsing
 
 - add strings
-- allow for quote literals
 
 ### repl
 

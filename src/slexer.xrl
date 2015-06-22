@@ -14,9 +14,15 @@ Rules.
 {ATOM}        : {token, {atom, TokenLine, to_atom(TokenChars)}}.
 \(            : {token, {'(',  TokenLine}}.
 \)            : {token, {')',  TokenLine}}.
+'[a-z]        : {skip_token, transform_to_quote(TokenChars)}.
+'\([^\)]*\)   : {skip_token, transform_to_quote(TokenChars)}.
 {WHITESPACE}+ : skip_token.
 
 Erlang code.
+
+transform_to_quote([_Quote|Body]) ->
+  PushBack = "(quote " ++ Body ++ ")",
+  PushBack.
 
 to_atom(Chars) ->
   list_to_atom(Chars).

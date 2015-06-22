@@ -65,4 +65,22 @@ defmodule IntegrationTest do
     assert Scheme.eval("(is-not-elephant? (quote elephant))") == "#f"
     assert Scheme.eval("(is-not-elephant? (quote laptop))") == "#t"
   end
+
+  test "quote literals" do
+    Scheme.DefinitionTable.start_link
+
+    Scheme.eval """
+    (define rember
+      (lambda (a lat)
+        (cond
+          ((null? lat) '())
+          ((eq? (car lat) a)
+           (rember a (cdr lat)))
+          (else
+            (cons (car lat)
+              (rember a (cdr lat)))))))
+    """
+
+    assert Scheme.eval("(rember 'z '(y y z))") == "(y y)"
+  end
 end
