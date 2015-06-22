@@ -83,4 +83,10 @@ defmodule IntegrationTest do
 
     assert Scheme.eval("(rember 'z '(y y z))") == "(y y)"
   end
+
+  test "strings" do
+    assert Scheme.eval("""
+      "hello?"
+    """)  == "hello?"
+  end
 end

@@ -49,6 +49,10 @@ defmodule Scheme.Interpreter do
     end
   end
 
+  def string_action({:string, body}, _) do
+    to_string(body)
+  end
+
   def lambda_action([_type, formals, body], table) do
     [:non_primitive, [table, formals, body]]
   end
@@ -79,7 +83,11 @@ defmodule Scheme.Interpreter do
     &Scheme.Interpreter.application_action/2
   end
 
+  # HACK. adding this so I can get strings to work.
+  def tuple_to_action({:string, _}), do: &Scheme.Interpreter.string_action/2
+
   def expression_to_action(e = [_|_]), do: list_to_action(e)
+  def expression_to_action(t) when is_tuple(t), do: tuple_to_action(t)
   def expression_to_action(e), do: atom_to_action(e)
 
   def meaning(e, table), do: expression_to_action(e).(e, table)

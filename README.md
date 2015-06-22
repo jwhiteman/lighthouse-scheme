@@ -10,10 +10,7 @@
 - require
 - basic lib & test framework
 - allow define to work for non-lambdas (ex: `(define x 42)`)
-
-### parsing
-
-- add strings
+- begin
 
 ### repl
 
