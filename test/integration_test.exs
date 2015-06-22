@@ -89,4 +89,14 @@ defmodule IntegrationTest do
       "hello?"
     """)  == "hello?"
   end
+
+  test "require" do
+    Scheme.DefinitionTable.start_link
+
+    Scheme.eval "(require \"lib/scheme/lib/list.scm\")"
+
+    assert Scheme.eval("""
+      (fold '(1 2 3) 0 (lambda (e acc) (+ e acc)))
+    """) == "6"
+  end
 end

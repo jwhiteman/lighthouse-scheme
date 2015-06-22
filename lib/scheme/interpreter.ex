@@ -57,8 +57,17 @@ defmodule Scheme.Interpreter do
     [:non_primitive, [table, formals, body]]
   end
 
+  # TODO: is `save` more clear than `put` ?
   def define_action([_type, name, lambda], _table) do
     put name, lambda_action(lambda, [])
+  end
+
+  def require_action([_, {:string, filename}], _) do
+    {:ok, body} = File.read(filename)
+
+    Scheme.Evaluator.eval(body)
+
+    :ok
   end
 
   def atom_to_action(n) when is_number(n) do
@@ -79,6 +88,7 @@ defmodule Scheme.Interpreter do
   def list_to_action([:and|_]), do: &Scheme.Interpreter.and_action/2
   def list_to_action([:not|_]), do: &Scheme.Interpreter.not_action/2
   def list_to_action([:or|_]), do: &Scheme.Interpreter.or_action/2
+  def list_to_action([:require|_]), do: &Scheme.Interpreter.require_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
   end
