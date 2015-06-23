@@ -1,6 +1,10 @@
-# Lighthouse
+# Lighthouse Scheme (WIP)
 
 A very small Scheme-like language built on top of Elixir.
+
+In action:
+
+https://vimeo.com/131496359
 
 ## REPL
 
