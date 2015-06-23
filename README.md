@@ -1,20 +1,13 @@
-# Scheme on Elixir.
+# Lighthouse
 
-@wip.
+A very small Scheme-like language built on top of Elixir.
 
-## todo
+## REPL
 
-### lang
+In iex:
 
-- add print
-- basic test framework
-- begin
+```elixir
+Scheme.start
+```
 
-### repl
-
-- _basic_ error handling
-- bins for repl, eval'ing files
-
-### other
-
-- dialyzer
+See TODO.md if you'd like to help out.
