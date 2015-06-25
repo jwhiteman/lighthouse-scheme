@@ -16,7 +16,7 @@ defmodule Scheme.REPL do
   def process(str, acc) do
     current_total = acc <> clean(str)
 
-    case reader(str, current_total) do
+    case what_to_do(str, current_total) do
       { :ok, :ignore }   ->
         IO.gets("") |> process(current_total)
       { :ok, :evaluate } ->
@@ -30,7 +30,7 @@ defmodule Scheme.REPL do
     String.replace str, "\n", "\n "
   end
 
-  def reader(latest, total) do
+  def what_to_do(latest, total) do
     cond do
       is_leading_comment?(latest) ->
         { :ok, :ignore }

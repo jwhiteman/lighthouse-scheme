@@ -22,23 +22,23 @@ defmodule REPLTest do
   end
 
   test "non-lists are evaluated immediately" do
-    assert reader(@empty, "42") == { :ok, :evaluate }
+    assert what_to_do(@empty, "42") == { :ok, :evaluate }
   end
 
   test "balanced lists are evaluated immediately" do
-    assert reader(@empty, "(1 (2) 3)") == { :ok , :evaluate }
+    assert what_to_do(@empty, "(1 (2) 3)") == { :ok , :evaluate }
   end
 
   test "lists with more left parens recur" do
-    assert reader(@empty, "(define rember") == { :ok, :recur }
+    assert what_to_do(@empty, "(define rember") == { :ok, :recur }
   end
 
   test "lists with more right parens are an error" do
-    assert reader(@empty, "(define rember))") == { :error, :unexpected_list_terminator }
+    assert what_to_do(@empty, "(define rember))") == { :error, :unexpected_list_terminator }
   end
 
   test "lists with leading comments are ignored" do
-    assert reader("   ;; this is a comment!\n", @empty) == { :ok, :ignore }
+    assert what_to_do("   ;; this is a comment!\n", @empty) == { :ok, :ignore }
   end
 
 end
