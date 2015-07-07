@@ -2,13 +2,13 @@
 
 ## lang
 
-- add print
+- file eval
+- add print and puts
 - basic test framework
 - begin
 
 ## repl
 
-- _basic_ error handling
 - bins for repl, eval'ing files
 
 ## other
