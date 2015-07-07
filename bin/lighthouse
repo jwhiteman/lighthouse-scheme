@@ -1,5 +1,4 @@
 #!/usr/bin/env elixir
-# Reminder: apply any changes in this file to bin\mix.bat
 Mix.start
 Mix.CLI.main
-Scheme.start
+Scheme.repl

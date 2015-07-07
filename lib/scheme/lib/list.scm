@@ -1,29 +1,26 @@
-;; fold
 (define fold
-  (lambda (col acc fun)
+  (lambda (fun acc col)
     (cond
       ((null? col) acc)
       (else
-        (fold (cdr col)
+        (fold fun
               (fun (car col) acc)
-              fun)))))
+              (cdr col))))))
 
-;; map
 (define map
-  (lambda (col func)
+  (lambda (fun col)
     (cond
       ((null? col) '())
       (else
-        (cons (func (car col))
-              (map (cdr col) func))))))
+        (cons (fun (car col))
+              (map fun (cdr col)))))))
 
-;; filter
 (define filter
-  (lambda (col func)
+  (lambda (fun col)
     (cond
       ((null? col) '())
       ((func (car col))
        (cons (car col)
-             (filter (cdr col) func)))
+             (filter fun (cdr col))))
       (else
-        (filter (cdr col) func)))))
+        (filter fun (cdr col))))))

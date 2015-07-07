@@ -24,6 +24,8 @@ defmodule Scheme.REPL do
           Scheme.Evaluator.eval(current_total)
         { :ok, :recur }    ->
           IO.gets("")  |> process(current_total)
+        { :error, :unexpected_list_terminator } ->
+          "error: unexpected list terminator"
       end
     rescue
       e in RuntimeError ->

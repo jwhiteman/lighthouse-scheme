@@ -63,11 +63,7 @@ defmodule Scheme.Interpreter do
   end
 
   def require_action([_, {:string, filename}], _) do
-    {:ok, body} = File.read(filename)
-
-    Scheme.Evaluator.eval(body)
-
-    :ok
+    to_string(filename) |> Scheme.Library.load
   end
 
   def atom_to_action(n) when is_number(n) do
