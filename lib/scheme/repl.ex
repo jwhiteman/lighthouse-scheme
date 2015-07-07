@@ -14,15 +14,22 @@ defmodule Scheme.REPL do
   end
 
   def process(str, acc) do
-    current_total = acc <> clean(str)
+    try do
+      current_total = acc <> clean(str)
 
-    case what_to_do(str, current_total) do
-      { :ok, :ignore }   ->
-        IO.gets("") |> process(current_total)
-      { :ok, :evaluate } ->
-        Scheme.Evaluator.eval(current_total)
-      { :ok, :recur }    ->
-        IO.gets("")  |> process(current_total)
+      case what_to_do(str, current_total) do
+        { :ok, :ignore }   ->
+          IO.gets("") |> process(current_total)
+        { :ok, :evaluate } ->
+          Scheme.Evaluator.eval(current_total)
+        { :ok, :recur }    ->
+          IO.gets("")  |> process(current_total)
+      end
+    rescue
+      e in RuntimeError ->
+        "error: #{e.message}"
+      MatchError ->
+        "syntax error"
     end
   end
 
@@ -70,7 +77,7 @@ defmodule Scheme.REPL do
 
   defp is_non_list?(str) do
     num_left_parens(str) == 0 &&
-      num_right_parens(str) == 0
+    num_right_parens(str) == 0
   end
 
   defp is_only_whitespace?(str), do: String.match?(str, ~r/^\s+$/)
