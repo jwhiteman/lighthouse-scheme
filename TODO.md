@@ -1,16 +1,13 @@
 # TODO
 
-## lang
+# lang
 
-- file eval
-- add print and puts
-- basic test framework
+- quit (create a quit action that just throws :quit, catch )
+- display
 - begin
 
-## repl
+# other
 
-- bins for repl, eval'ing files
-
-## other
-
-- dialyzer
+- file eval
+- basic test framework
+- bin for file eval
