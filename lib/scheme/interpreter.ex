@@ -16,6 +16,7 @@ defmodule Scheme.Interpreter do
     :sub1,
     :number?,
     :quit,
+    :display,
     :*,
     :+
   ]
@@ -194,6 +195,15 @@ defmodule Scheme.Interpreter do
   def apply_primitive(:number?, [n]), do: is_number(n)
   def apply_primitive(:*, tail) do
     List.foldl tail, 1, &(&1 * &2)
+  end
+
+  def apply_primitive(:display, msg) do
+    msg
+      |> to_string
+      |> Macro.unescape_string
+      |> IO.write
+
+    nil
   end
 
   def apply_primitive(:+, tail) do
