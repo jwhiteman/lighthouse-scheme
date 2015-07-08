@@ -2,7 +2,6 @@
 
 # lang
 
-- quit (create a quit action that just throws :quit, catch in repl)
 - display
 - begin
 

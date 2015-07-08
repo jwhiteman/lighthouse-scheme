@@ -2,6 +2,24 @@ defmodule Scheme.Interpreter do
 
   import Scheme.DefinitionTable, only: [ put: 2, get: 1]
 
+  @primitives [
+    true,
+    false,
+    :cons,
+    :car,
+    :cdr,
+    :null?,
+    :eq?,
+    :atom?,
+    :zero?,
+    :add1,
+    :sub1,
+    :number?,
+    :quit,
+    :*,
+    :+
+  ]
+
   def build(s1, s2), do: [s1 | [s2 | []]]
 
   def new_entry(l, r), do: build(l, r)
@@ -75,7 +93,7 @@ defmodule Scheme.Interpreter do
   end
 
   def atom_to_action(e) do
-    case is_member(e, primitives) do
+    case is_member(e, @primitives) do
       true  -> &Scheme.Interpreter.const_action/2
       false -> &Scheme.Interpreter.identifier_action/2
     end
@@ -201,16 +219,6 @@ defmodule Scheme.Interpreter do
   end
 
   def value(e), do: meaning(e, [])
-
-  defp primitives do
-    [
-      true, false, :cons,
-      :car, :cdr, :null?,
-      :eq?, :atom?, :zero?,
-      :add1, :sub1, :number?,
-      :*, :+, :quit
-    ]
-  end
 
   defp is_member(_, []), do: false
   defp is_member(a, [a|_]), do: true
