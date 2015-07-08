@@ -1,5 +1,5 @@
 defmodule Scheme.Library do
-  @libs_directory "lib/scheme/lib"
+  @libs_directory "lib/scheme/stdlib"
   @master "library"
   @extension "scm"
 

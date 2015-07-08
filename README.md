@@ -2,31 +2,45 @@
 
 A very small Scheme-like language built on top of Elixir.
 
+Built for those who want to hack on Scheme and Elixir and recursive ideas.
+
 In action:
 
 https://vimeo.com/131496359
 
-## REPL
+## Running the REPL
 
 From the command line:
 
 ```bash
-./scheme
+./lighthouse
 ```
 
-In iex:
+You can also access the repl from inside `iex`:
 
 ```elixir
 # iex -S mix
-Scheme.start
+Scheme.repl
 ```
 
 ## Running a file
 
 ```bash
-./scheme path-to-file.scm
+./lighthouse path-to-file.scm
 ```
 
-Note the file extension must be `.scm`
+*Note the file extension must be `.scm`*
 
-See TODO.md and/or create a PR if you'd like to add something.
+## Running tests for the library
+
+As it stands there is a small standard library and test framework.
+
+To run the tests:
+
+```bash
+bin/run-tests
+```
+
+## Helping Out
+
+PRs welcome. See the TODO.md if you'd like.

@@ -2,8 +2,8 @@ defmodule Scheme.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :scheme,
-     version: "0.0.1",
+    [app: :lighthouse,
+     version: "0.2.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

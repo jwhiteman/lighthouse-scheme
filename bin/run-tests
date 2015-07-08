@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./lighthouse test/stdlib/list-test.scm

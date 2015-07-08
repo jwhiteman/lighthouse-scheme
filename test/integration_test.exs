@@ -90,10 +90,10 @@ defmodule IntegrationTest do
     """)  == "hello?"
   end
 
-  test "require absolute" do
+  test "require path" do
     Scheme.DefinitionTable.start_link
 
-    Scheme.eval "(require \"lib/scheme/lib/list.scm\")"
+    Scheme.eval "(require \"lib/scheme/stdlib/list.scm\")"
 
     assert Scheme.eval("""
       (fold + 0 '(1 2 3))

@@ -4,6 +4,7 @@
 - better error handling...everywhere
 - improve scheme test harness
 - add to lib
+- readline fix for repl (?)
 
 # Someday
 
