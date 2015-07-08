@@ -1,4 +1,0 @@
-#!/usr/bin/env elixir
-Mix.start
-Mix.CLI.main
-Scheme.repl

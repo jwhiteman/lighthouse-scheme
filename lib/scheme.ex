@@ -10,6 +10,12 @@ defmodule Scheme do
     Scheme.REPL.start
   end
 
+  def eval_file(filename) do
+    start
+
+    Scheme.Library.load(filename)
+  end
+
   def eval(scheme) do
     Scheme.Evaluator.eval(scheme) |> Scheme.Printer.print
   end
