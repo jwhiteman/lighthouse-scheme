@@ -1,3 +1,9 @@
+;; TODO
+;; concat
+;; take
+;; drop
+;; reverse
+
 (define fold
   (lambda (fun acc col)
     (cond

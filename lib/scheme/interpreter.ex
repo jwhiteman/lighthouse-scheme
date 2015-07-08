@@ -1,6 +1,6 @@
 defmodule Scheme.Interpreter do
 
-  import Scheme.DefinitionTable, only: [ put: 2, get: 1]
+  import Scheme.DefinitionTable, only: [ put: 2, get: 1 ]
 
   @primitives [
     true,
