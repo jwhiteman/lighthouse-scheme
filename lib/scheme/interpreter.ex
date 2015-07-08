@@ -108,6 +108,7 @@ defmodule Scheme.Interpreter do
   def list_to_action([:or|_]), do: &Scheme.Interpreter.or_action/2
   def list_to_action([:require|_]), do: &Scheme.Interpreter.require_action/2
   def list_to_action([:quit]), do: &Scheme.Interpreter.quit_action/2
+  def list_to_action([:begin|_]), do: &Scheme.Interpreter.begin_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
   end
@@ -120,6 +121,10 @@ defmodule Scheme.Interpreter do
   def expression_to_action(e), do: atom_to_action(e)
 
   def meaning(e, table), do: expression_to_action(e).(e, table)
+
+  def begin_action([_ | begin_lines], table) do
+    evlis(begin_lines, table) |> List.last
+  end
 
   def cond_action([_ | cond_lines], table), do: evcon(cond_lines, table)
 

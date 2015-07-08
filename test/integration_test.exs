@@ -117,4 +117,19 @@ defmodule IntegrationTest do
       (fold + 0 '(1 2 3))
     """) == "6"
   end
+
+  test "begin" do
+    Scheme.DefinitionTable.start_link
+
+   Scheme.eval """
+   (begin
+     (define a (lambda (x) (+ 1 x)))
+     (define b (lambda (x) (+ 2 x)))
+     (define c (lambda (x) (+ 3 x))))
+   """
+
+   assert Scheme.eval("(a 1)") == "2"
+   assert Scheme.eval("(b 1)") == "3"
+   assert Scheme.eval("(c 1)") == "4"
+  end
 end
