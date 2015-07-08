@@ -1,7 +1,7 @@
 Definitions.
 
 INT        = [0-9]+
-ATOM       = [a-z_0-9\?\&\-\*\^\+]+
+ATOM       = [a-z_0-9<>\?\&\-\*\^\+]+
 WHITESPACE = [\s\t\n\r]
 COMMENT    = ;.*\n
 S          = ["]
