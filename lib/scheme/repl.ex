@@ -4,7 +4,14 @@ defmodule Scheme.REPL do
   @rparen 41
 
   def start do
-    repl(1)
+    IO.puts "Lighthouse Scheme"
+    IO.puts "Use (quit) to exit"
+
+    try do
+      repl(1)
+    catch
+      :quit -> IO.puts "Bye."
+    end
   end
 
   def repl(n) do

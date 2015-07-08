@@ -2,7 +2,7 @@
 
 # lang
 
-- quit (create a quit action that just throws :quit, catch )
+- quit (create a quit action that just throws :quit, catch in repl)
 - display
 - begin
 
@@ -10,4 +10,4 @@
 
 - file eval
 - basic test framework
-- bin for file eval
+- bin/lighthouse option parse to also eval files

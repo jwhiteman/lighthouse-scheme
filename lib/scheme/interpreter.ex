@@ -66,6 +66,10 @@ defmodule Scheme.Interpreter do
     to_string(filename) |> Scheme.Library.load
   end
 
+  def quit_action([:quit], _) do
+    throw :quit
+  end
+
   def atom_to_action(n) when is_number(n) do
     &Scheme.Interpreter.const_action/2
   end
@@ -85,6 +89,7 @@ defmodule Scheme.Interpreter do
   def list_to_action([:not|_]), do: &Scheme.Interpreter.not_action/2
   def list_to_action([:or|_]), do: &Scheme.Interpreter.or_action/2
   def list_to_action([:require|_]), do: &Scheme.Interpreter.require_action/2
+  def list_to_action([:quit]), do: &Scheme.Interpreter.quit_action/2
   def list_to_action(_) do
     &Scheme.Interpreter.application_action/2
   end
@@ -203,7 +208,7 @@ defmodule Scheme.Interpreter do
       :car, :cdr, :null?,
       :eq?, :atom?, :zero?,
       :add1, :sub1, :number?,
-      :*, :+
+      :*, :+, :quit
     ]
   end
 
