@@ -17,8 +17,10 @@ defmodule Scheme.Interpreter do
     :number?,
     :quit,
     :display,
-    :*,
-    :+
+    :>,
+    :<,
+    :+,
+    :*
   ]
 
   def build(s1, s2), do: [s1 | [s2 | []]]
@@ -190,6 +192,8 @@ defmodule Scheme.Interpreter do
   def apply_primitive(:atom?, [n]), do: is_atom(n) || is_number(n)
   def apply_primitive(:zero?, [0]), do: true
   def apply_primitive(:zero?, _), do: false
+  def apply_primitive(:>, [l, r]), do: l > r
+  def apply_primitive(:<, [l, r]), do: l < r
   def apply_primitive(:add1, [n]), do: n + 1
   def apply_primitive(:sub1, [n]), do: n - 1
   def apply_primitive(:number?, [n]), do: is_number(n)

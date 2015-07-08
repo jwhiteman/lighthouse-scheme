@@ -271,6 +271,16 @@ defmodule InterpreterTest do
     assert catch_throw(value [:quit]) == :quit
   end
 
+  test ">" do
+    assert value([:>, 3, 2])
+    refute value([:>, 2, 3])
+  end
+
+  test "<" do
+    assert value([:<, 2, 3])
+    refute value([:<, 3, 2])
+  end
+
   defp empty_table, do: [ [[], []] ]
   defp some_table, do: [ [[:x, :y], [1, 2]], [[:bar, :foo], [42, 99]] ]
 end
