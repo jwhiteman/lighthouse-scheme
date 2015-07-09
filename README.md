@@ -1,4 +1,4 @@
-# Lighthouse Scheme (v 0.2.0)
+# Lighthouse Scheme
 
 A very small Scheme-like language built on top of Elixir.
 

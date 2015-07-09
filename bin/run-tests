@@ -1,3 +1,6 @@
 #!/bin/bash
 
+# todo make test/stdlib/suite-test.scm
+
 ./lighthouse test/stdlib/list-test.scm
+./lighthouse test/stdlib/math-test.scm

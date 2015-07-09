@@ -20,6 +20,7 @@ defmodule Scheme.Interpreter do
     :>,
     :<,
     :+,
+    :-,
     :*
   ]
 
@@ -212,6 +213,10 @@ defmodule Scheme.Interpreter do
 
   def apply_primitive(:+, tail) do
     List.foldl tail, 0, &(&1 + &2)
+  end
+
+  def apply_primitive(:-, tail) do
+    Enum.reduce tail, &(&2 - &1)
   end
 
   def apply_primitive(n, _) do
