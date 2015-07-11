@@ -1,6 +1,6 @@
 defmodule Scheme.Library do
   @libs_directory "lib/scheme/stdlib"
-  @master "library"
+  @master "core"
   @extension "scm"
 
   def load do
