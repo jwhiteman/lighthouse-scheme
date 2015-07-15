@@ -1,7 +1,5 @@
 # TODO
 
-- add ci, logo
-- get versioning figured out.
 - cleanup parser & lexer
 - better error handling...everywhere
 - improve scheme test harness
@@ -14,3 +12,5 @@
 - set, let, letrec, callcc, etc
 - macro system
 - basic concurrency primitives
+- add ci, logo
+- get versioning figured out.
