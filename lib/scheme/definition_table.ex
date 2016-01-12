@@ -1,15 +1,27 @@
 defmodule Scheme.DefinitionTable do
-  @name __MODULE__
+  use GenServer
 
   def start_link do
-    Agent.start_link(fn -> HashDict.new end, name: @name)
+    GenServer.start_link __MODULE__, [], name: __MODULE__
+  end
+
+  def init(_) do
+    {:ok, HashDict.new}
   end
 
   def put(ident, body) do
-    Agent.update(@name, &(Dict.put &1, ident, body))
+    GenServer.cast __MODULE__, {:put, ident, body}
   end
 
   def get(ident) do
-    Agent.get(@name, &(Dict.get &1, ident))
+    GenServer.call __MODULE__, {:get, ident}
+  end
+
+  def handle_cast({:put, ident, body}, table) do
+    {:noreply, Dict.put(table, ident, body)}
+  end
+
+  def handle_call({:get, ident}, _from, table) do
+    {:reply, Dict.get(table, ident), table}
   end
 end
