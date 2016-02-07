@@ -27,6 +27,7 @@ defmodule Scheme.Interpreter do
   def build(s1, s2), do: [s1 | [s2 | []]]
 
   def new_entry(l, r), do: build(l, r)
+
   def extend_table(e, table), do: [e | table]
 
   def lookup_in_entry(name, [keys, values], error_function) do
@@ -36,11 +37,9 @@ defmodule Scheme.Interpreter do
   defp lookup_in_entry_help(name, [], _, error_function) do
     error_function.(name)
   end
-
   defp lookup_in_entry_help(name, [name|_], [value|_], _) do
     value
   end
-
   defp lookup_in_entry_help(name, [_|keys], [_|values], error_function) do
     lookup_in_entry_help(name, keys, values, error_function)
   end
@@ -95,7 +94,6 @@ defmodule Scheme.Interpreter do
   def atom_to_action(n) when is_number(n) do
     &Scheme.Interpreter.const_action/2
   end
-
   def atom_to_action(e) do
     case is_member(e, @primitives) do
       true  -> &Scheme.Interpreter.const_action/2
@@ -133,7 +131,6 @@ defmodule Scheme.Interpreter do
   def cond_action([_ | cond_lines], table), do: evcon(cond_lines, table)
 
   defp evcon([[:else, answer]], table), do: meaning(answer, table)
-
   defp evcon([[question, answer] | remaining_questions], table) do
     case meaning(question, table) do
       true  -> meaning(answer, table)
@@ -148,6 +145,7 @@ defmodule Scheme.Interpreter do
   end
 
   def and_action([_ | and_lines], table), do: scheme_and(and_lines, table)
+
   def or_action([_ | or_lines], table), do: scheme_or(or_lines, table)
 
   def scheme_and(list, table) do
@@ -169,7 +167,6 @@ defmodule Scheme.Interpreter do
   defp short_circuit_helper([h|[]], table, _) do
     meaning(h, table)
   end
-
   defp short_circuit_helper([h|t], table, func) do
     result = meaning(h, table)
 
@@ -210,15 +207,12 @@ defmodule Scheme.Interpreter do
 
     nil
   end
-
   def apply_primitive(:+, tail) do
     List.foldl tail, 0, &(&1 + &2)
   end
-
   def apply_primitive(:-, tail) do
     Enum.reduce tail, &(&2 - &1)
   end
-
   def apply_primitive(n, _) do
     raise "error: no primitive matches #{n}"
   end
@@ -226,7 +220,6 @@ defmodule Scheme.Interpreter do
   def appli([:primitive, fun_rep], vals) do
     apply_primitive(fun_rep, vals)
   end
-
   def appli([:non_primitive, fun_rep], vals) do
     apply_closure(fun_rep, vals)
   end
