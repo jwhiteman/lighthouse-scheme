@@ -25,3 +25,4 @@ defmodule Scheme.DefinitionTable do
     {:reply, Dict.get(table, ident), table}
   end
 end
+

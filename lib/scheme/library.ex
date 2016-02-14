@@ -6,7 +6,6 @@ defmodule Scheme.Library do
   def load do
     load("#{@libs_directory}/#{@master}.#{@extension}")
   end
-
   def load(filename) do
     {:ok, body} = read(filename)
 
