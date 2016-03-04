@@ -1,5 +1,6 @@
 /_build
 /deps
+/src/*.erl
 erl_crash.dump
 *.ez
 *.beam
