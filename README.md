@@ -2,6 +2,8 @@
 
 A very small Scheme-like language built on top of Elixir.
 
+[![ScreenShot](https://raw.githubusercontent.com/jwhiteman/lighthouse-scheme/master/resources/schemer.png)](https://vimeo.com/131496359)
+
 Built for those who want to hack on Scheme and Elixir and recursive ideas.
 
 In action:
