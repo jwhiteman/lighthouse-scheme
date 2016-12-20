@@ -9,8 +9,8 @@
 
 # Someday
 
+- get versioning figured out.
 - set, let, letrec, callcc, etc
 - macro system
 - basic concurrency primitives
 - add ci, logo
-- get versioning figured out.
