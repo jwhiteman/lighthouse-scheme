@@ -1,39 +1,40 @@
-% kelem is a hack. :/
-Nonterminals program list elems elem kelem.
+Nonterminals program statements statement primitive list elems elem.
 Terminals '(' ')' int bool atom string.
 
 Rootsymbol program.
 
 program ->
-  list              : ['$1'].
-program ->
-  list program      : ['$1' | '$2'].
-program ->
-  kelem program     : ['$1' | '$2' ].   % hack. elem?
-program ->
-  kelem             : ['$1'].           % hack. elem?
+  statements               : '$1'.
+
+statements ->
+  statement statements     : ['$1' | '$2'].
+statements ->
+  statement                : ['$1'].
+
+statement  ->
+  primitive                : '$1'.
+statement  ->
+  list                     : '$1'.
+
+primitive -> int           : extract_token('$1').
+primitive -> bool          : extract_token('$1').
+primitive -> atom          : extract_token('$1').
+primitive -> string        : extract_token('$1').
 
 list ->
-  '(' ')'           : [].
+  '(' ')'                  : [].
 list ->
-  '(' elems ')'     : '$2'.
+  '(' elems ')'            : '$2'.
 
 elems ->
-  elem              : ['$1'].
+  elem                     : ['$1'].
 elems ->
-  elem elems        : ['$1'|'$2'].
+  elem elems               : ['$1'|'$2'].
 
-elem -> int         : extract_token('$1').
-elem -> bool        : extract_token('$1').
-elem -> atom        : extract_token('$1').
-elem -> string      : extract_token('$1').
-elem -> list        : '$1'.
-
-% hack.
-kelem -> int        : extract_token('$1').
-kelem -> bool       : extract_token('$1').
-kelem -> atom       : extract_token('$1').
-kelem -> string     : extract_token('$1').
+elem  ->
+  primitive                : '$1'.
+elem  ->
+  list                     : '$1'.
 
 Erlang code.
 
