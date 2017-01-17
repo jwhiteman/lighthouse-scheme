@@ -1,10 +1,8 @@
 # Lighthouse Scheme
 
-A very small Scheme-like language built on top of Elixir.
+A toy Scheme-like language built on top of Elixir, just for fun.
 
 [![ScreenShot](https://raw.githubusercontent.com/jwhiteman/lighthouse-scheme/master/resources/schemer.png)](https://vimeo.com/131496359)
-
-Built for those who want to hack on Scheme and Elixir and recursive ideas.
 
 In action:
 
@@ -42,7 +40,3 @@ To run the tests:
 ```bash
 bin/run-tests
 ```
-
-## Helping Out
-
-PRs welcome. See the TODO.md if you'd like.
